@@ -1,0 +1,106 @@
+      <!--start searches -->
+     <!-- <div class="rxp-header-tool-box">
+        <ul class="nav navbar-nav rxp-header-tool-box-nav">
+          <div class="navbar-form search-form rxp-header-tool-search-box" id="navbar-search">
+              <input class="form-control rxp-search-text-box"  placeholder="Search for customer by mobile..." 
+                type="text" autocomplete="off" [(ngModel)]="searchKey" value=""/>
+              <button class="btn btn-default" type="button" (click)="searchOrderByCustomerMobile()">
+                <i class="icon-magnifier"></i>
+              </button>
+              <button class="btn btn-clear-text" *ngIf="searchKey" aria-label="Clear" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon>
+              </button>
+          </div>
+          <li>
+            <a (click)="onAdd()" class="icon-menu d-none d-sm-block">
+              <i class="wi wi-day-sunny"></i> Add
+            </a>
+          </li>
+        </ul>
+        <br>
+      
+        
+      </div>-->
+          <!--start new searches-->
+          <div style='display:block'>
+            <form #addClientForm="ngForm" (ngSubmit)="searchProductInStore()" novalidate>  
+              <div class="row" >   
+                <!-- start product -->
+                <mat-form-field class="example-full-width">
+                  <mat-chip-list #chipList>
+                    <mat-chip
+                      *ngFor="let product of products"
+                      [selectable]="selectable"
+                      [removable]="removable"
+                      (removed)="remove(product)">
+                      {{product}}
+                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input
+                      placeholder="Select product..."
+                      #productInput
+                      [formControl]="productCtrl"
+                      [matAutocomplete]="auto"
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur"
+                      (matChipInputTokenEnd)="add($event)">
+                  </mat-chip-list>
+                  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                    <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                      {{product.Product_Name}},Code:({{product.Product_Code}})
+                    </mat-option>
+                  </mat-autocomplete>
+                  </mat-form-field> 
+                  <!-- end product --> 
+                    <!--start size variant-->
+                    <mat-form-field  class="form-field">
+                        <mat-select  [(ngModel)]="Size_Variant" name="Size_Variant" placeholder="Select Size Variants">
+                        <mat-option [value]=""></mat-option>
+                        <mat-option *ngFor="let size of sizeVariants" [value]="size">
+                            {{ size.Size_Name }}
+                        </mat-option>
+                        </mat-select>
+                        <mat-error>Please enter a size variant</mat-error>
+                    </mat-form-field>
+                <!--end size variant-->
+                  <!--start color variant-->
+                <mat-form-field  class="form-field">
+                    <mat-select  [(ngModel)]="Color_Variant" name="Color_Variant"placeholder="Select Color Variants">
+                      <mat-option [value]=""></mat-option>
+                      <mat-option *ngFor="let color of colorVariants" [value]="color" [style.background-color]="color.Color_HexaDecimalBasedValue">
+                        {{ color.Color_Name }} 
+                      </mat-option>
+                    </mat-select>
+                    <mat-error>Please enter a size variant</mat-error>
+                  </mat-form-field>
+               <!--end color variant-->  
+                <div class="col-sm-1 form-group">    
+                    <button type="submit" class="btn btn-success" >Search</button>   
+                </div>  
+          </div>  
+            </form>
+            </div>
+            <!--end new searches -->
+      <!-- end searches -->
+      <div class="row" *ngIf="productIsFound">
+          <ng-container *ngFor="let product of allProducts; let i = index">
+            <div class="col">
+              <!--start product card-->
+              <div  class="card">
+                <img *ngIf="product.Media_SamllImageUrl" class="card-img-top" [src]="serverUrl+'/images/'+product.Media_SamllImageUrl" alt="{{ product.Store_Product.Product_Name }}">
+                <div class="card-body">
+                  <h4 class="card-title">{{ product.Store_Product.Product_Name }}</h4>
+                  <p class="card-text">Price :{{ product.Store_Product.Product_SellingPrice  }}</p>
+                  <p class="card-text">Available Quantity :{{ product.Store_Quantity - product.Store_PendingQuantity  }}</p>
+                </div>
+              </div>    
+              
+              <!-- end product card-->
+            </div>
+          </ng-container>
+      </div>
+    
+      <div class="row" *ngIf="!productIsFound">
+        <h3 class="text-center mx-auto alert alert-danger">Product not found!</h3>
+      </div>

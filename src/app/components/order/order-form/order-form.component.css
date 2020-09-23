@@ -1,0 +1,108 @@
+
+mat-dialog-content{
+    flex-wrap: wrap;
+}
+.container{
+    display: flex;
+
+}
+.form-field{
+    width: 35%;
+    margin-right: 9em;
+}
+mat-form-field{
+    width: auto;
+}
+.m-right{
+    margin-right: 2em;
+}
+div.m-right{
+    display: inline-block;
+}
+
+mat-dialog-actions{
+    text-align: center;
+    margin: auto;
+    display: block;
+}
+/***inputs and table****/
+.add-button{
+    display: contents;
+}
+.add-button button{
+margin-left: 0;
+}
+.deleteIcon{
+    cursor: pointer;
+}
+.product-class{
+    width: 20%;
+    display: inline-block;
+}
+.submit{
+    font-size: 1.5em;
+    background: aqua;
+}
+.col-sm-1{
+    padding-left: 0 !important;
+    padding-right: 6px !important;
+}
+.col-sm-6{
+    padding-right: 6px;
+}
+.ogt-col-product-avail-qty-info{
+    max-width: 117px;
+}
+.ogt-in-field-info {
+    font-size: 19px;
+    color: #e0e0e0;
+    display: block;
+    margin-top: 6px;
+    text-align: center;
+}
+.ogt-in-field-info i{
+    margin-right: 5px;
+}
+fieldset{
+    display: block !important;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #e4e4e4 !important;
+    border-image: initial;
+    margin-bottom: 16px;
+}
+legend{
+    width: auto;
+    padding-right: 4px;
+    font-size: 18px;
+}
+.ogt-table-header{
+    background-color: #e6e6e6;
+    height: 32px;
+}
+.ogt-table-header th , td{
+    padding-left: 5px;
+}
+.ogt-in-table-data-rows:nth-child(even) {
+    background-color: #f9fbfb;
+}
+textarea{
+    height: 130px;
+}
+.ogt-total-amount-txt{
+    font-size: 20px;
+    margin-right: 11px;
+    color: #ccc;
+}
+.ogt-total-amount-value{
+    font-size: 25px;
+    margin-right: 11px;
+    color: #65a5f5;
+}

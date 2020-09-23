@@ -1,0 +1,283 @@
+<mat-toolbar color="secondary" style="margin-bottom: 5px;">
+
+    <h2 mat-dialog-title>{{ title }}</h2>
+  
+  </mat-toolbar>
+  <form >
+    <mat-dialog-content>
+        <div class="container">
+          <mat-form-field appearance="fill"class="form-field" >
+              <mat-label>Choose a date*</mat-label>
+              <input matInput [matDatepicker]="picker" name="Order_Date" [(ngModel)]='Order_Date' disabled>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-divider></mat-divider>
+          <mat-form-field class="form-field">
+          <input
+              matInput
+              placeholder="Note*"
+              [(ngModel)]="Order_Note"
+              name="Order_Note"
+              disabled
+          />
+          <mat-error>Please enter a note </mat-error>
+          </mat-form-field>
+          <mat-divider></mat-divider>
+      </div>
+      <!--start decreasing products-->
+      <mat-card class="padded-content-page" >
+          <div layout="row" class="rxp-margin-top-medium hcm-contact-add-form" layout-xs="column">
+              <!--start inputs--><!--
+              <form #f="ngForm" (ngSubmit)="onAdd()">
+                
+                  <div class="product-class">
+                      <mat-form-field class="example-full-width">
+                        <mat-chip-list #chipList>
+                          <mat-chip
+                            *ngFor="let product of products"
+                            [selectable]="selectable"
+                            [removable]="removable"
+                            (removed)="remove(product)">
+                            {{product}}
+                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                          </mat-chip>
+                          <input
+                            placeholder="Select product..."
+                            #productInput
+                            [formControl]="productCtrl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            [matChipInputAddOnBlur]="addOnBlur"
+                            (matChipInputTokenEnd)="add($event)">
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                          <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                            {{product.Product_Name}},Code:({{product.Product_Code}})
+                          </mat-option>
+                        </mat-autocomplete>
+                        </mat-form-field> 
+                        
+      
+                  </div>
+
+                <mat-form-field  class="m-right">
+                  <mat-select  [(ngModel)]="Size_Variant" name="Size_Variant" placeholder="Select Size Variants">
+                    <mat-option *ngFor="let size of sizeVariants" [value]="size">
+                      {{ size.Size_Name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>Please enter a size variant</mat-error>
+                </mat-form-field>
+                <mat-divider></mat-divider>
+
+                <mat-form-field  class="m-right">
+                  <mat-select  [(ngModel)]="Color_Variant" name="Color_Variant"placeholder="Select Color Variants">
+                    <mat-option *ngFor="let color of colorVariants" [value]="color" [style.background-color]="color.Color_HexaDecimalBasedValue">
+                      {{ color.Color_Name }} 
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>Please enter a size variant</mat-error>
+                </mat-form-field>
+
+                 <div  class="m-right">
+                  <input name="Quantity" [(ngModel)]="Quantity" type="number" placeholder="Quantity"required /> 
+                </div> 
+              div  class="m-right">
+                  <input name="Cost" [(ngModel)]="Cost" type="number" placeholder="Cost:"required /> 
+              </div>
+              <div  class="m-right">
+                <input name="Price" [(ngModel)]="Price" type="number" placeholder="Price:"required /> 
+            </div>
+                  <mat-dialog-actions  class="add-button">
+                      <button
+                      mat-raised-button
+                      mat-primary
+                      type="submit"
+                      [disabled]="f.form.invalid"
+                      >
+                      ADD
+                      </button>
+                  </mat-dialog-actions>
+              </form>    -->
+              <!-- end inputs -->
+              <!--start table-->
+              <table>
+                  <thead>
+                    <tr>
+                      <th>Product Name</th>
+                      <th>Size Variant</th>
+                      <th>Color Variant</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                      <th>Returned quantities</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  *ngFor="let orderedProduct of ordered_Products">
+                      <td>{{ orderedProduct.Product.Product_Name }}</td>
+                      <td>{{ orderedProduct.Size_Variant.Size_Name }}</td>
+                      <td>{{ orderedProduct.Color_Variant.Color_Name }}</td>
+                      <td>{{ orderedProduct.Quantity }}</td>
+                      <td>{{ orderedProduct.Total_Price }}</td>
+                      <td  >{{ orderedProduct.availableProductQuantity }}</td>
+                      <td> {{ orderedProduct.returnedQuantity || '0'}} </td>
+                    </tr>
+                    <br>
+                    
+                </tbody>
+              </table>
+              <!-- end table-->
+              <!--start customer-->
+              <div class="form-field">
+                <mat-form-field class="example-full-width" style="width: 100%;">
+                  <mat-chip-list #chipList>
+                    <mat-chip
+                      *ngFor="let customer of customers"
+                      [selectable]="selectable"
+                      [removable]="removable"
+                      (removed)="removeCustomer(customer)" disabled>
+                      {{customer}}
+                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                    <input
+                      placeholder="Select customer..."
+                      #customerInput
+                      [formControl]="customerCtrl"
+                      [matAutocomplete]="autoCustomer"
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur"
+                      
+                      >
+                      
+                  </mat-chip-list>
+                  <mat-autocomplete #autoCustomer="matAutocomplete" disabled>
+                    <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+                      {{customer.Customer_Name}},Code:({{customer.Customer_Code}})
+                    </mat-option>
+                  </mat-autocomplete>
+                  </mat-form-field> 
+                  
+
+            </div>
+              <!-- end customer -->
+              <mat-form-field class="form-field">
+                <input
+                    matInput
+                    placeholder="AddressName*"
+                    [(ngModel)]="Customer_ShippingAddress.AddressName"
+                    name="AddressName"
+                    disabled
+                />
+                <mat-error>Please enter an Address Name </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                  <input
+                      matInput
+                      placeholder="ContactName*"
+                      [(ngModel)]="Customer_ShippingAddress.ContactName"
+                      name="ContactName"
+                      disabled
+                  />
+                  <mat-error>Please enter a Contact Name </mat-error>
+                </mat-form-field>
+              <mat-form-field class="form-field">
+                    <input
+                        matInput
+                        placeholder="Mobile*"
+                        [(ngModel)]="Customer_ShippingAddress.Mobile"
+                        name="Mobile"
+                        disabled
+                    />
+                    <mat-error>Please enter a Mobile </mat-error>
+              </mat-form-field>
+              <mat-form-field class="form-field">
+                <input
+                    matInput
+                    placeholder="Mobile*"
+                    [(ngModel)]="Customer_ShippingAddress.Mobile"
+                    name="Mobile"
+                    disabled
+                />
+                <mat-error>Please enter a Mobile </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field">
+            <input
+                matInput
+                placeholder="Building*"
+                [(ngModel)]="Customer_ShippingAddress.Building"
+                name="Building"
+                disabled
+            />
+            <mat-error>Please enter a Building </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <input
+            matInput
+            placeholder="Floor*"
+            [(ngModel)]="Customer_ShippingAddress.Floor"
+            name="Floor"
+            disabled
+        />
+        <mat-error>Please enter a Floor </mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-field">
+        <input
+            matInput
+            placeholder="Apartment*"
+            [(ngModel)]="Customer_ShippingAddress.Apartment"
+            name="Apartment"
+            disabled
+        />
+        <mat-error>Please enter a Apartment </mat-error>
+    </mat-form-field>
+ 
+  <mat-form-field class="form-field">
+    <input
+        matInput
+        placeholder="StreetAddress*"
+        [(ngModel)]="Customer_ShippingAddress.StreetAddress"
+        name="StreetAddress"
+        disabled
+    />
+    <mat-error>Please enter a StreetAddress </mat-error>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+      <input
+          matInput
+          placeholder="City*"
+          [(ngModel)]="Customer_ShippingAddress.City"
+          name="City"
+          disabled
+      />
+      <mat-error>Please enter a City </mat-error>
+    </mat-form-field>
+    <mat-form-field  class="m-right">
+      <mat-select  [(ngModel)]="Customer_ShippingAddress.Province" name="Province" placeholder="Select Province" disabled>
+        <mat-option *ngFor="let province of provinces" [value]="province._id">
+          {{ province.Province_Name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>Please enter a province</mat-error>
+    </mat-form-field>
+<br>
+    <mat-form-field  class="m-right">
+      <mat-select  [(ngModel)]="Order_InvntoryHandlingAssignedTo" name="Order_InvntoryHandlingAssignedTo" placeholder="Task Assigned To"disabled >
+        <mat-option *ngFor="let user of users" [value]="user._id">
+          {{ user.User_Name }}
+        </mat-option>
+      </mat-select>
+      <mat-error>Please select a user</mat-error>
+    </mat-form-field>
+              
+        </div>
+          <mat-divider class="rxp-margin-top-larg"></mat-divider>
+          
+      </mat-card>
+      <!--end decreasing products-->
+    </mat-dialog-content>
+  
+  </form>
+  

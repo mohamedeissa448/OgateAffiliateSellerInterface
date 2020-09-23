@@ -1,0 +1,45 @@
+
+mat-dialog-content{
+    flex-wrap: wrap;
+}
+.container{
+    display: flex;
+
+}
+.form-field{
+    width: 35%;
+    margin-right: 9em;
+}
+mat-form-field{
+    width: auto;
+}
+.m-right{
+    margin-right: 2em;
+}
+div.m-right{
+    display: inline-block;
+}
+
+mat-dialog-actions{
+    text-align: center;
+    margin: auto;
+    display: block;
+}
+/***inputs and table****/
+.add-button{
+    display: contents;
+}
+.add-button button{
+margin-left: 0;
+}
+.deleteIcon{
+    cursor: pointer;
+}
+.product-class{
+    width: 20%;
+    display: inline-block;
+}
+.submit{
+    font-size: 1.5em;
+    background: aqua;
+}

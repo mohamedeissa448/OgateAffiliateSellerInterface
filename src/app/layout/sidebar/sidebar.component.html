@@ -1,0 +1,148 @@
+<div id="left-sidebar" class="sidebar" *ngIf="sidebarVisible" style="overflow-y:scroll;">
+    <div class="sidebar-scroll">
+        <div class="user-account">
+            <img src="assets/images/user.png" class="rounded-circle user-photo" alt="User Profile Picture">
+            <div class="dropdown" ngbDropdown>
+                <span>Welcome,</span>
+                <a href="javascript:void(0);" class="dropdown-toggle user-name" ngbDropdownToggle><strong>{{AffiliateSeller_DisplayName}}</strong></a>
+                <ul class="dropdown-menu dropdown-menu-right account" ngbDropdownMenu>
+                    <li><a [routerLink]="['/authentication/page-login']"><i class="icon-power"></i>Logout</a></li>
+                </ul>
+            </div>
+            <hr>
+            <ul class="row list-unstyled">
+                <li class="col-4">
+                    <small>Orders</small>
+                    <h6>{{ numOfAllOrders }}</h6>
+                </li>
+                <li class="col-4">
+                    <small>Return</small>
+                    <h6>{{ percentageOfReturnedOrders }} %</h6>
+                </li>
+                <li class="col-4">
+                    <small>Balance</small>
+                    <h6>{{ affiliateSellerBalance }}</h6>
+                </li>
+            </ul>
+        </div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active':navTab == 'menu'}" (click)="changeNavTab('menu')">
+                    <i class="icon-grid"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active':navTab == 'report'}" (click)="changeNavTab('report')">
+                    <i class="icon-bar-chart"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [ngClass]="{'active':navTab == 'setting'}" 
+                    (click)="changeNavTab('setting')" title="Setting">
+                    <i class="icon-wrench"></i>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content p-l-0 p-r-0">
+            <div class="tab-pane" id="menu" [ngClass]="{'active':navTab == 'menu' || !navTab}">
+                <nav id="left-sidebar-nav" class="sidebar-nav">
+                    <ul id="main-menu" class="metismenu">
+                        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                            [ngClass]="{ active: currentActiveMenu == 'dashboard' }">
+                            <a [routerLink]="['/dashboard/index']"><i class="icon-home"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                            <a [routerLink]="['/order/add-order']">
+                                <i class="wi wi-day-sunny"></i>
+                                <span>Add Order</span>
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+                            [ngClass]="{ active: currentActiveMenu == 'order' }">
+                            <a [routerLink]="['/order/manage-order']">
+                                <i class="icon-basket-loaded"></i>
+                                <span>My Orders</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="tab-pane p-l-15 p-r-15" id="report" [ngClass]="{'active':navTab == 'report'}">
+                            <a [routerLink]="['/canceled-orders/manage-canceled-orders']"><i class="icon-home"></i>
+                                <span>Canceled Orders</span>
+                            </a>
+                            <a [routerLink]="['/returned-orders/manage-returned-orders']"><i class="icon-home"></i>
+                                <span>Returned Orders</span>
+                            </a>
+                            <a [routerLink]="['/my-payments/manage-my-payments']"><i class="icon-home"></i>
+                                <span>My Payments</span>
+                            </a>
+                            <a [routerLink]="['/statistics/manage-statistics']"><i class="icon-home"></i>
+                                <span>Statistics</span>
+                            </a>
+                            <a [routerLink]="['/product-gallery/manage-product-gallery']"><i class="icon-home"></i>
+                                <span>Product Gallery</span>
+                            </a>
+            </div>
+            <div class="tab-pane p-l-15 p-r-15" id="setting" [ngClass]="{'active':navTab == 'setting'}">
+                <h6>User Settings</h6>
+                <ul class="setting-list list-unstyled">
+                    <li>
+                        <label class="fancy-checkbox">
+                            <span class="in-menu-label">Display Name:</span><br>
+                            {{AffiliateSeller_DisplayName}}
+                        </label>
+                        <i class="icon-pencil in-menu-edit-btt" (click)="changeDisplayName()" style="cursor: pointer;"></i>
+                    </li>
+                    <li>
+                        <label class="fancy-checkbox">
+                            <span class="in-menu-label" >Email:</span><br>
+                            {{AffiliateSeller_Email}}
+                        </label>
+                        <i class="icon-pencil in-menu-edit-btt"(click)="changeEmail()"style="cursor:pointer"></i>
+                    </li>
+                    <li>
+                        <label class="fancy-checkbox">
+                            <span class="in-menu-label">Password:</span><br>
+                            ******
+                        </label>
+                        <i class="icon-pencil in-menu-edit-btt" (click)="changePassword()"style="cursor:pointer"></i>
+                    </li>
+                </ul>
+                <hr>
+                <h6>Choose Skin</h6>
+                <ul class="choose-skin list-unstyled">
+                    <li data-theme="purple" [ngClass]="{'active':themeClass == 'theme-purple'}" (click)="changeTheme('theme-purple')">
+                        <div class="purple"></div>
+                        <span>Purple</span>
+                    </li>
+                    <li data-theme="blue" [ngClass]="{'active':themeClass == 'theme-blue'}" (click)="changeTheme('theme-blue')">
+                        <div class="blue"></div>
+                        <span>Blue</span>
+                    </li>
+                    <li data-theme="cyan" [ngClass]="{'active':themeClass == 'theme-cyan'}" (click)="changeTheme('theme-cyan')">
+                        <div class="cyan"></div>
+                        <span>Cyan</span>
+                    </li>
+                    <li data-theme="green" [ngClass]="{'active':themeClass == 'theme-green'}" (click)="changeTheme('theme-green')">
+                        <div class="green"></div>
+                        <span>Green</span>
+                    </li>
+                    <li data-theme="orange" [ngClass]="{'active':themeClass == 'theme-orange'}" (click)="changeTheme('theme-orange')">
+                        <div class="orange"></div>
+                        <span>Orange</span>
+                    </li>
+                    <li data-theme="blush" [ngClass]="{'active':themeClass == 'theme-blush'}" (click)="changeTheme('theme-blush')">
+                        <div class="blush"></div>
+                        <span>Blush</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

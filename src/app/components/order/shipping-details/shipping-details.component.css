@@ -1,0 +1,29 @@
+ul li b{
+  font-size: 1.5em;
+  color: black;
+  display: inline-block;
+  margin-bottom: 1.4em;
+}
+ul li span{
+  font-weight: bolder;
+    padding-left: 2em;
+    color: blue;
+    font-size: 1.2em;
+}
+.doc-container h3{
+  color:red
+}
+/********* close button for model*********/
+.btn-dialog-close {
+  margin-left: auto;
+}
+.btn-dialog-close:hover {
+  color: red;
+}
+.ogt-track-btt{
+  display: block;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto !important;
+  margin-top: 40px;
+}

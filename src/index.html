@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <meta
+      name="description"
+      content="Lucid Angular Bootstrap 4x Admin Template"
+    />
+    <meta name="author" content="WrapTheme, design by: ThemeMakker.com" />
+
+    <title>Ogat Reseller CP</title>
+    <base href="/" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="https://cdn.syncfusion.com/ej2/material.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.6.1/fullcalendar.min.css"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script src="/tinymce/tinymce.min.js"></script>
+    <!-- <script
+      src="https://cdn.tiny.cloud/1/nyweckwx1mqvkue4i54uet7gfrvtv225sxq28gfvxkpcudnr/tinymce/5/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script> -->
+  </head>
+
+  <body>
+    <app-root>Loading...</app-root>
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/color_skins.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+      type="text/javascript"
+    ></script>
+    <script
+      src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"
+      type="text/javascript"
+    ></script>
+    <script>
+      $(document).ready(function() {
+        var activeAccordion = localStorage.getItem("accordion");
+        if (activeAccordion) {
+          $(
+            "#accordion1 > .panel:eq(" + activeAccordion + ") .collapse"
+          ).toggleClass("in");
+          localStorage.removeItem("accordion");
+        }
+
+        $("#accordion1")
+          .find(".panel-heading > a")
+          .click(function() {
+            localStorage.setItem(
+              "accordion",
+              $(this)
+                .closest(".panel")
+                .index()
+            );
+            //Expand or collapse this panel
+            $(this)
+              .next()
+              .toggleClass("in");
+
+            //Hide the other panels
+            //$(".collapse").not($(this).next()).removeClass('in');
+          });
+
+        $("#accordion1 .collapse input:checkbox").change(function() {
+          if ($(this).is(":checked")) {
+            $(".collapse").addClass("in");
+          } else {
+            $(".collapse").removeClass("in");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

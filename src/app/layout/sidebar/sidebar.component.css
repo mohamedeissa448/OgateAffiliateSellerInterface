@@ -1,0 +1,18 @@
+.media-icon{
+    margin-right: 0.7em;
+}
+.user-account .list-unstyled li{
+    text-align: center;
+}
+.rxp-side-tabs-content .tab-pane{
+    height: calc(100vh - 290px);
+    overflow-y: scroll;
+}
+.in-menu-label{
+    font-size: 10px;
+    color: #ccc;
+}
+.in-menu-edit-btt{
+    float: right;
+    margin-top: 16px;
+}

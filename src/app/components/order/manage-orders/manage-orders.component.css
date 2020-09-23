@@ -1,0 +1,29 @@
+.colorImage {
+    max-width: 200px;
+    max-height: 10vw;
+  }
+  table th {
+    font-weight: bold;
+    font-size: larger;
+  }
+  table th:first-of-type {
+    width: 10%;
+  }
+  table th:nth-of-type(2) {
+    width: 15%;
+  }
+  td.mat-cell,
+  td.mat-footer-cell,
+  th.mat-header-cell {
+    padding: 9px;
+  }
+  .contact{
+    cursor: pointer;
+  }
+  .form-field{
+    width: 14%;
+    margin-right: 3px;
+}
+.mat-form-field-wrapper {
+   margin-bottom: 0em; 
+}

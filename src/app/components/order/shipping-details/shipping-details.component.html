@@ -1,0 +1,39 @@
+<mat-toolbar color="secondary" style="margin-bottom: 5px;">
+
+    <h2 mat-dialog-title>{{ title }}</h2>
+    <span class="fill-remainig-space"></span>
+  <button
+    class="btn-dialog-close"
+    mat-stroked-button
+    (click)="onClose()"
+    tabindex="-1"
+  >
+    <mat-icon>clear</mat-icon>
+  </button>
+  
+</mat-toolbar>
+  <form >
+    <mat-dialog-content>
+      
+      <mat-card class="padded-content-page" >
+          <div layout="row" class="rxp-margin-top-medium hcm-contact-add-form" layout-xs="column">
+              
+            <!-- 3 -->
+            <div class="doc-container">
+
+                    <ul class="doc-conditions-inner" *ngIf="isOrderShipped == true">
+                        <li><b>Company &nbsp;&nbsp;&nbsp;&nbsp; :</b> <span>{{ shipped_company_name }}</span></li>
+                        <li><b>Shipping Bill :</b> <span>{{ Order_ShippingWaybill }}</span></li>
+                    </ul>
+                    <h3 *ngIf="isOrderShipped == false">Order didn't ship until now!</h3>
+ 
+            </div>
+              
+        </div>
+          <a class="btn btn-primary mr-1 ogt-track-btt" target="_blank" href="{{Shipping_TrakingURL}}"><i class="icon-directions"></i> Track Package</a>
+      </mat-card>
+    </mat-dialog-content>
+  
+ 
+  </form>
+  

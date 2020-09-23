@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<form >
+  <mat-dialog-content>
+    <mat-form-field>
+      <input matInput placeholder="New Email*" name="AffiliateSeller_Email" [(ngModel)]= "AffiliateSeller_Email" required/>
+      <mat-error>Please enter an Email</mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button
+      mat-raised-button
+      mat-primary
+      type="submit"
+      (click) = "onSubmit()"
+    >
+      Submit
+    </button>
+  </mat-dialog-actions>
+</form>

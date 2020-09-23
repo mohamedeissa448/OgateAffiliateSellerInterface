@@ -1,0 +1,223 @@
+<div class="rxp-data-form-bg">
+  <fieldset>
+    <legend>Products:</legend>
+    <form #productForm="ngForm" (ngSubmit)="onAdd()">
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field class="rxp-full-width-container ogt-product-autocomplete">
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let product of products" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(product)">
+                {{product}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input placeholder="Select product" #productInput [formControl]="productCtrl"
+                [matAutocomplete]="auto" [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)">
+            </mat-chip-list>
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+              <mat-option *ngFor="let product of filteredProducts | async" [value]="product">
+                {{product.Product_Name}},Code:({{product.Product_Code}})
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <mat-form-field class="rxp-full-width-container">
+            <mat-select (selectionChange)="CheckQuantity()" [(ngModel)]="Size_Variant" name="Size_Variant" placeholder="Size">
+              <mat-option *ngFor="let size of sizeVariants" [value]="size">
+                {{ size.Size_Name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Please enter a size variant</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <mat-form-field class="rxp-full-width-container">
+            <mat-select (selectionChange)="CheckQuantity()" [(ngModel)]="Color_Variant" name="Color_Variant" placeholder="Color">
+              <mat-option class="ogt-color-select" *ngFor="let color of colorVariants" [value]="color"
+                [style.background-color]="color.Color_HexaDecimalBasedValue">
+                {{ color.Color_Name }}
+              </mat-option>
+            </mat-select>
+            <mat-error>Please enter a size variant</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <mat-form-field class="rxp-full-width-container">
+            <input matInput placeholder="Quantity" type="number" [(ngModel)]="Quantity"
+              name="Quantity" required/>
+            <mat-error>Quantity?</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-3">
+          <div class="row">
+            <div class="col-sm-7">
+              <span class="ogt-in-field-info" *ngIf="avilableQuanityVal==0"><i class="icon-info"></i>Info</span>
+              <span *ngIf="avilableQuanityVal!=0">
+                Avail Qty: {{avilableQuanityVal}}
+              </span><br>
+              <span *ngIf="SellingPrice!=0">
+                Price: {{SellingPrice}}
+              </span>
+            </div>
+            <div class="col-sm-5 rxp-righted-container">
+              <button class="btn btn-primary mr-1" type="submit" [disabled]="productForm.form.invalid">
+                <i class="fa fa-arrow-down"></i>&nbsp;<span >Add</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <!-- end inputs -->
+    <!--start table-->
+    <table *ngIf="ordered_Products.length >0">
+      <thead>
+        <tr class="ogt-table-header">
+          <th>Product Name</th>
+          <th>Size</th>
+          <th>Color</th>
+          <th>Qty</th>
+          <th>Total</th>
+          <th class="rxp-righted-container ogt-in-table-delet-header">- </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let orderedProduct of ordered_Products" class="ogt-in-table-data-rows">
+          <td>{{ orderedProduct.Product.Product_Name }}</td>
+          <td>{{ orderedProduct.Size_Variant.Size_Name }}</td>
+          <td>{{ orderedProduct.Color_Variant.Color_Name }}</td>
+          <td>{{ orderedProduct.Quantity }}</td>
+          <td>{{ orderedProduct.Total_Price }} L.E</td>
+          <td class="rxp-righted-container">
+            <span class="material-icons deleteIcon" (click)="deleteOrderedProduct(orderedProduct)">
+              delete
+            </span>
+          </td>
+        </tr>
+        <br>
+
+      </tbody>
+    </table>
+    <!-- end table-->
+  </fieldset>
+  <form #orderForm="ngForm" (ngSubmit)="orderForm.valid && onSubmit()">
+  <fieldset>
+    <legend>Customer Details:</legend>
+    <div class="row"> 
+      <div class="col-sm-6">
+        <mat-form-field class="example-full-width" style="width: 100%;">
+          <mat-chip-list #chipList>
+            <mat-chip *ngFor="let customer of customers" [selectable]="selectable" [removable]="removable"
+              (removed)="removeCustomer(customer)">
+              {{customer}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="Customer Mobile" autocomplete="disabled" #customerInput [formControl]="customerCtrl"
+              [matAutocomplete]="autoCustomer" [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="addCustomer($event)">
+          </mat-chip-list>
+          <mat-autocomplete #autoCustomer="matAutocomplete" (optionSelected)="selectedCustomer($event)">
+            <mat-option *ngFor="let customer of filteredCustomers | async" [value]="customer">
+              {{customer.Customer_Name}} ({{customer.Address.Mobile}})
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <input matInput placeholder="Customer Name" [(ngModel)]="CustomerName" required
+            name="CustomerName" />
+          <mat-error>Please enter Customer Name </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <input matInput placeholder="Street Address" [(ngModel)]="Customer_ShippingAddress.StreetAddress"
+            name="StreetAddress" required/>
+          <mat-error>Enter Street Address</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <input matInput placeholder="Building Number" [(ngModel)]="Customer_ShippingAddress.Building"
+           name="Building" required/>
+          <mat-error>Please enter a Building </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <input matInput placeholder="Floor" required
+            [(ngModel)]="Customer_ShippingAddress.Floor" name="Floor" />
+          <mat-error>Please enter a Floor </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-4">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <input matInput placeholder="Apartment" required
+            [(ngModel)]="Customer_ShippingAddress.Apartment" name="Apartment" />
+          <mat-error>Please enter a Apartment </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <input matInput placeholder="City" required
+            [(ngModel)]="Customer_ShippingAddress.City" name="City" />
+          <mat-error>Please enter a City </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <mat-select (selectionChange)="changeProvince()" [(ngModel)]="Customer_ShippingAddress.Province" required
+            name="Province" placeholder="Select Province">
+            <mat-option *ngFor="let province of provinces" [value]="province._id">
+              {{ province.Province_Name }}
+            </mat-option>
+          </mat-select>
+          <mat-error>Please enter a province</mat-error>
+        </mat-form-field>
+      </div>        
+    </div> 
+  </fieldset>
+  <fieldset>
+    <legend>Order Details:</legend>
+    <div class="row">
+      <div class="col-sm-6">
+        <mat-form-field appearance="fill" class="form-field rxp-full-width-container">
+          <mat-label>Order Date</mat-label>
+          <input matInput [matDatepicker]="picker" name="Order_Date" required [(ngModel)]=Order_Date>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-12">
+        <mat-form-field class="form-field rxp-full-width-container">
+          <textarea matInput placeholder="Order Note (Additional Mobile, more address details,..ect)" [(ngModel)]="Order_Note" name="Order_Note"> </textarea>
+          <mat-error>Please enter a note </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  </fieldset>
+  <div class="row">
+    <div class="col-sm-7">
+      <span class="ogt-total-amount-txt">Shipping Fees</span><span class="ogt-total-amount-value">{{ShippingFees}}</span>
+    </div>
+    <div class="col-sm-5 rxp-righted-container">
+      <span class="ogt-total-amount-txt"> Total Amount: </span><span class="ogt-total-amount-value">{{ TotalOrderAmount}} L.E</span>
+    </div>
+  </div>
+  <div class="rxp-centered-container">
+    <button *ngIf="!isLoading" class="btn btn-primary mr-1 ogt-large-btt" type="submit">
+      <i class="fa fa-check"></i>&nbsp;<span >Place Order</span>
+    </button>
+    <div class="progress rxp-loading-container" *ngIf="isLoading">
+      <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+  </div>
+  </div>
+  </form>
+</div>

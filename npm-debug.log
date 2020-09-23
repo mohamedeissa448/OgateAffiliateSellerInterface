@@ -1,0 +1,29 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files (x86)\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'node@10.10.0' ]
+2 info using npm@1.2.18
+3 info using node@v0.10.6
+4 verbose read json C:\Users\mass\Desktop\nodeJs\work\cms\package.json
+5 error Error: invalid version: 2.5.17.0
+5 error     at validVersion (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:571:40)
+5 error     at final (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:323:23)
+5 error     at C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:139:33
+5 error     at cb (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\slide\lib\async-map.js:48:11)
+5 error     at C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\read-package-json\read-json.js:239:59
+5 error     at Glob.<anonymous> (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\glob\glob.js:90:7)
+5 error     at Glob.EventEmitter.emit (events.js:95:17)
+5 error     at Glob._processEmitQueue (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\glob\glob.js:280:10)
+5 error     at Glob.emitMatch (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\glob\glob.js:265:8)
+5 error     at Glob._finish (C:\Program Files (x86)\nodejs\node_modules\npm\node_modules\glob\glob.js:227:8)
+6 error If you need help, you may report this log at:
+6 error     <http://github.com/isaacs/npm/issues>
+6 error or email it to:
+6 error     <npm-@googlegroups.com>
+7 error System Windows_NT 6.1.7601
+8 error command "C:\\Program Files (x86)\\nodejs\\node.exe" "C:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "node@10.10.0"
+9 error cwd C:\Users\mass\Desktop\nodeJs\work\cms
+10 error node -v v0.10.6
+11 error npm -v 1.2.18
+12 verbose exit [ 1, true ]
